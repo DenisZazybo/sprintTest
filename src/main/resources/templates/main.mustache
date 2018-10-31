@@ -1,0 +1,17 @@
+<html>
+<body>
+<div>
+    <div>Список юзеров</div>
+    {{#users}}
+        <div>
+            <b>{{id}}</b>
+            <b>{{username}}</b>
+        </div>
+    {{/users}}
+</div>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
