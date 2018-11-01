@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+
+
+<form action="/addtests" method="post">
+    <div><label> Tests title : <input type="text"  name="title"/> </label></div>
+    <div><label> Type: <select name="type">
+                            {{#testsType}}
+                                <option value="{{id}}">{{type}}</option>
+                            {{/testsType}}
+                       </select>
+        </label></div>
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <div><input type="submit" value="Add"/></div>
+</form>
+</body>
+</html>

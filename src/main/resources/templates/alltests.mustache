@@ -1,0 +1,28 @@
+<html>
+<body>
+    <div>Список тестов</div>
+    {{#tests}}
+        <div>
+            <b> ID - </b>{{id}}
+            <b>| Title - </b>{{title}}
+            <b>| Type - </b>{{type.type}}
+        </div>
+        <i>Вопросы </i>
+        {{#questions}}
+            <b> ID_v - </b>{{id}}
+            <b>| Title_v - </b>{{ques}}
+            <br/>
+
+            {{#answers}}
+                <b>|  * </b>{{answers}}
+                <br/>
+            {{/answers}}
+        {{/questions}}
+    {{/tests}}
+</div>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>

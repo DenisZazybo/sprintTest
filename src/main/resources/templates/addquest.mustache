@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+
+<form action="/addqestions" method="post">
+    <div><label> Type: <select name="test">
+        {{#tests}}
+            <option value="{{id}}">{{title}}</option>
+        {{/tests}}
+    </select>
+    </label></div>
+    <div><label> Questions : <input type="text" name="ques"/> </label></div>
+
+    <div>
+        <i>Вопросы</i><br/>
+        <div><label> answer #1 : <input type="text" name="answer1"/> </label>
+            <label> Верный
+                 <input type="hidden" value=0 name="ck_answer1">
+                 <input type="checkbox" value=1 name="ck_answer1"> </label>
+        </div>
+        <div><label> answer #2 : <input type="text" name="answer2"/> </label>
+            <label> Верный
+                <input type="hidden" value=0 name="ck_answer2">
+                <input type="checkbox" value=1 name="ck_answer2"></label>
+        </div>
+        <div><label> answer #3 : <input type="text" name="answer3"/> </label>
+            <label> Верный
+                <input type="hidden" value=0 name="ck_answer1">
+                <input type="checkbox" value=1 name="ck_answer3"> </label>
+        </div>
+        <div><label> answer #4 : <input type="text" name="answer4"/> </label>
+            <label> Верный
+                <input type="hidden" value=0 name="ck_answer1">
+                <input type="checkbox" value=1 name="ck_answer4"> </label>
+        </div>
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+    <div><input type="submit" value="Add"/></div>
+</form>
+</body>
+</html>
