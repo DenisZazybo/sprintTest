@@ -8,16 +8,7 @@
             <b>| Type - </b>{{type.type}}
         </div>
         <i>Вопросы </i>
-        {{#questions}}
-            <b> ID_v - </b>{{id}}
-            <b>| Title_v - </b>{{ques}}
-            <br/>
-
-            {{#answers}}
-                <b>|  * </b>{{answers}}
-                <br/>
-            {{/answers}}
-        {{/questions}}
+       <a href="/runTest?testId={{id}}&queryId=-1"> Пройти</a>
     {{/tests}}
 </div>
 <form action="/logout" method="post">

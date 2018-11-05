@@ -2,12 +2,13 @@ package hello.conrtoller;
 
 import hello.entity.*;
 import hello.repos.*;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class TestsController {
@@ -34,13 +35,14 @@ public class TestsController {
 
     @RequestMapping(value = "/addtests",
                     method = RequestMethod.POST)
-    public Object addTests(@ModelAttribute Tests tests, Map<String, Object> model)    {
+    public Object addTests(@AuthenticationPrincipal User author, @ModelAttribute Tests tests, Map<String, Object> model)
+    {
 
 //        User userDb =  userRepo.findByUsername(user.getUsername());
 //        if(userDb!= null){
 //            model.put("message", "User Exists!");
 //        }
-
+        tests.setAuthor(author);
         testsRepo.save(tests);
         return "redirect:/allTests";
     }
@@ -59,24 +61,17 @@ public class TestsController {
                            @RequestParam String answer2, @RequestParam boolean ck_answer2,
                            @RequestParam String answer3, @RequestParam boolean ck_answer3,
                            @RequestParam String answer4, @RequestParam boolean ck_answer4,
-                           Map<String, Object> model)    {
+                           Map<String, Object> model)
+    {
 
-//        User userDb =  userRepo.findByUsername(user.getUsername());
-//        if(userDb!= null){
-//            model.put("message", "User Exists!");
-//        }
+
         questionsRepo.save(questions);
-//        int i = 1;
-//        for(i=1; i<5; i++){
-//
-//        }
-
 
         if(answer1!=""){
             Answers ans1 = new Answers();
             ans1.setQuestion(questions);
             ans1.setAnswers(answer1);
-            if(ck_answer1) ans1.setTrues(ck_answer1);
+            ans1.setTrues(ck_answer1);
             answersRepo.save(ans1);
         }
 
@@ -106,5 +101,37 @@ public class TestsController {
 
 
         return "redirect:/allTests";
+    }
+
+    @GetMapping(path="/runTest")
+    public String runTest(@RequestParam Long testId, @RequestParam Long queryId, Map<String, Object> model){
+        Optional<Tests> tests =  testsRepo.findById(testId);
+        if(tests == null){
+            model.put("error", "Test not exist!");
+        }
+        else{
+           Tests TestObj = tests.get();
+            model.put("testId", TestObj.getId());
+            model.put("testTitle", TestObj.getTitle());
+            Set<Questions> qest = TestObj.getQuestions();
+            boolean fl = false;
+            boolean start = false;
+            for( Questions qes: qest){
+                if(!start){
+                    model.put("queryTitle", qes.getQues());
+                    model.put("queryId", qes.getId());
+                    start = true;
+                }
+                if(fl){
+                    model.put("queryId", qes.getId());
+                    model.put("queryTitle", qes.getQues());
+                }
+                if(queryId==qes.getId()){
+                    fl = true;
+                }
+            }
+        }
+
+        return "runTest";
     }
 }

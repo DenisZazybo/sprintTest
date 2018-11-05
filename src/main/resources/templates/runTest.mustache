@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+{{#testId}}
+    <b> ID - </b>{{testId}}
+    <b>| Title - {{testTitle}}</b>
+    <br/>
+    <i>Вопрос</i>
+    <b>
+        {{queryTitle}}
+    </b>
+    <br/>
+    <a href="/runTest?testId={{testId}}&queryId={{queryId}}"> Previous </a> <span> </span>
+    <a href="/runTest?testId={{testId}}&queryId={{queryId}}"> Next </a>
+{{/testId}}
+{{#error}}
+    <b> Error : </b>{{error}}
+{{/error}}
+</body>
+</html>

@@ -13,6 +13,7 @@ public class Tests {
 
     private String title ;
 
+
     @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Questions> questions = new HashSet<Questions>();
 
@@ -20,6 +21,9 @@ public class Tests {
     @JoinColumn(name = "type_id")
     private TestsType type;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private User author;
 
     public Long getId() {
         return id;
@@ -43,6 +47,22 @@ public class Tests {
 
     public void setType(TestsType type) {
         this.type = type;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Set<Questions> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Questions> questions) {
+        this.questions = questions;
     }
 
 }
