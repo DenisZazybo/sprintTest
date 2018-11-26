@@ -26,12 +26,16 @@ public class RegistrationController {
        User userDb =  userRepo.findByUsername(user.getUsername());
        if(userDb!= null){
             model.put("message", "User Exists!");
+           return "registration";
+       } else{
+           user.setActive(true);
+           user.setRoles(Collections.singleton(Role.USER));
+           userRepo.save(user);
+           return "redirect:/login";
        }
 
-       user.setActive(true);
-       user.setRoles(Collections.singleton(Role.USER));
-       userRepo.save(user);
-        return "redirect:/login";
+
+
     }
 
     }
